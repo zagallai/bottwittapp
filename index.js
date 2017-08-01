@@ -8,10 +8,26 @@ var bot = new Twit({
     timeout_ms: 60 * 1000
 });
 
-bot.post('statuses/update', { status: 'Tweet using a twit bot' }, function(err, data, response) {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log(data.text + ' was tweeted!.');
+//update status with a tweet
+var updateStatus = function(tweet) {
+    bot.post('statuses/update', { status: tweet }, function(err, data, res) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(data.text + ' was tweeted!.');
+        }
+    });
+};
+//updateStatus('twit bot is working...');
+
+//Get a list of followers
+var getListOfFollowers = function() {
+        bot.get('followers/list', { screen_name: 'zagallai' }, function(err, data, response) {
+            data.users.forEach(function(user) {
+                console.log(user.screen_name);
+                console.log(user.location);
+                console.log('\n');
+            });
+        });
     }
-});
+    //getListOfFollowers();
